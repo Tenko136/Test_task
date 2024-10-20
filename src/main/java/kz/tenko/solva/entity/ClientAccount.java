@@ -13,7 +13,7 @@ public class ClientAccount {
     private int id;
 
     @Column(name = "num")
-    private int num;
+    private String num;
 
     @Column(name = "currency")
     private String currency;
@@ -22,7 +22,7 @@ public class ClientAccount {
     public ClientAccount() {
     }
 
-    public ClientAccount(int num, String currency) {
+    public ClientAccount(String num, String currency) {
         this.num = num;
         this.currency = currency;
     }
@@ -35,11 +35,11 @@ public class ClientAccount {
         this.id = id;
     }
 
-    public int getNum() {
+    public String getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(String num) {
         this.num = num;
     }
 
