@@ -1,4 +1,4 @@
-package kz.tenko.solva.solva.entity;
+package kz.tenko.solva.entity;
 
 
 import jakarta.persistence.*;
