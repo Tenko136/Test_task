@@ -18,18 +18,18 @@ public class CurrencyRate {
     private LocalDateTime dateTime;
 
     @Column(name = "rate_USD_KZ")
-    private double rateUSDxKZ;
+    private double rateKZ;
 
     @Column(name = "rate_USD_RU")
-    private double rateUSDxRU;
+    private double rateRU;
 
     public CurrencyRate() {
     }
 
     public CurrencyRate(LocalDateTime dateTime, double rateUSDxKZ, double rateUSDxRU) {
         this.dateTime = dateTime;
-        this.rateUSDxKZ = rateUSDxKZ;
-        this.rateUSDxRU = rateUSDxRU;
+        this.rateKZ = rateUSDxKZ;
+        this.rateRU = rateUSDxRU;
     }
 
     public int getId() {
@@ -48,19 +48,21 @@ public class CurrencyRate {
         this.dateTime = dateTime;
     }
 
-    public double getRateUSDxKZ() {
-        return rateUSDxKZ;
+    public double getRateKZ() {
+        return rateKZ;
     }
 
-    public void setRateUSDxKZ(double rateUSDxKZ) {
-        this.rateUSDxKZ = rateUSDxKZ;
+    public void setRateKZ(double rateKZ) {
+        this.rateKZ = rateKZ;
     }
 
-    public double getRateUSDxRU() {
-        return rateUSDxRU;
+    public double getRateRU() {
+        return rateRU;
     }
 
-    public void setRateUSDxRU(double rateUSDxRU) {
-        this.rateUSDxRU = rateUSDxRU;
+    public void setRateRU(double rateRU) {
+        this.rateRU = rateRU;
     }
+
+
 }

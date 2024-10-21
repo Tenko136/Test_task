@@ -3,11 +3,14 @@ package kz.tenko.solva.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import kz.tenko.solva.entity.ClientLimit;
+import kz.tenko.solva.entity.CurrencyRate;
+import kz.tenko.solva.entity.OpenExchangeRates;
 import kz.tenko.solva.entity.Transactions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -44,7 +47,14 @@ public class RestDAOImpl implements RestDAO {
 
     @Override
     @Transactional
-    public void addCurrencyRate() {
+    public void addCurrencyRate(OpenExchangeRates rates, LocalDate date) {
+        CurrencyRate rate = new CurrencyRate();
+
+        rate.setDateTime(date.atStartOfDay());
+        rate.setRateKZ(rates.getRates().get("KZT"));
+        rate.setRateRU(rates.getRates().get("RUB"));
+
+        entityManager.merge(rate);
     }
 
 }

@@ -31,7 +31,11 @@ public class ControllerRest {
     public List<ClientLimit> getAllLimits(LimitsSearchDTO dto) {
         return restService.getLimits(dto);
     }
+
+    // todo remove
+    @GetMapping("/exchange-rate")
     public void addExchangeRate() {
+        restService.addCurrencyRate();
     }
 }
 

@@ -9,17 +9,12 @@ import java.util.List;
 
 public interface RestService {
 
-    public void saveOperation(Transactions transactions);
+    void saveOperation(Transactions transactions);
 
-    public void newLimit(ClientLimit limit);
+    void newLimit(ClientLimit limit);
 
-    public List<ClientLimit> getLimits(LimitsSearchDTO dto);
+    List<ClientLimit> getLimits(LimitsSearchDTO dto);
 
-    public void addCurrencyRate();
-
-
-// методы те же, что и в дао
-
-
+    void addCurrencyRate();
 
 }
