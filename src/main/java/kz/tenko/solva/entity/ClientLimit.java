@@ -3,20 +3,20 @@ package kz.tenko.solva.entity;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "client_limit")
-public class ClientLimits {
+public class ClientLimit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "client_account_id")
-    private int clientAccountId;
+    @ManyToOne
+    @JoinColumn(name = "client_account_id")
+    private ClientAccount clientAccount;
 
     @Column(name = "date_time")
     private LocalDateTime dateTime;
@@ -33,11 +33,11 @@ public class ClientLimits {
     @Column(name = "currency")
     private String currency;
 
-    public ClientLimits() {
+    public ClientLimit() {
     }
 
-    public ClientLimits(int clientAccountId, LocalDateTime dateTime, double amount, String category, double rest, String currency) {
-        this.clientAccountId = clientAccountId;
+    public ClientLimit(ClientAccount clientAccount, LocalDateTime dateTime, double amount, String category, double rest, String currency) {
+        this.clientAccount = clientAccount;
         this.dateTime = dateTime;
         this.amount = amount;
         this.category = category;
@@ -53,12 +53,12 @@ public class ClientLimits {
         this.id = id;
     }
 
-    public int getClientAccountId() {
-        return clientAccountId;
+    public ClientAccount getClientAccount() {
+        return clientAccount;
     }
 
-    public void setClientAccountId(int clientAccountId) {
-        this.clientAccountId = clientAccountId;
+    public void setClientAccount(ClientAccount clientAccount) {
+        this.clientAccount = clientAccount;
     }
 
     public LocalDateTime getDateTime() {
