@@ -2,10 +2,12 @@ package kz.tenko.solva.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import kz.tenko.solva.entity.ClientAccount;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.CurrencyRate;
-import kz.tenko.solva.entity.OpenExchangeRates;
-import kz.tenko.solva.entity.Transactions;
+import kz.tenko.solva.entity.Transaction;
+import kz.tenko.solva.dto.ClientLimitDTO;
+import kz.tenko.solva.dto.OpenExchangeRatesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,20 +23,25 @@ public class RestDAOImpl implements RestDAO {
     @Autowired
     private EntityManager entityManager;
 
+
     @Override
     @Transactional
-    public void newLimit(ClientLimit limit) {
+    public void saveOperation(Transaction transaction) {
 
-        limit.setDateTime(LocalDateTime.now());
-        entityManager.merge(limit);
+        transaction.setDateTime(LocalDateTime.now());
+        entityManager.merge(transaction);
     }
-
     @Override
     @Transactional
-    public void saveOperation(Transactions transactions) {
+    public void newLimit(ClientLimitDTO limit) {
+        ClientAccount clientAccount = new ClientAccount();
+        clientAccount.setId(limit.getClientId());
 
-        transactions.setDateTime(LocalDateTime.now());
-        entityManager.merge(transactions);
+        ClientLimit clientLimit = new ClientLimit();
+        clientLimit.setClientAccount(clientAccount);
+        clientLimit.setCategory(limit.getCategory());
+        clientLimit.setDateTime(LocalDateTime.now());
+        entityManager.merge(clientLimit);
     }
 
     @Override
@@ -47,10 +54,10 @@ public class RestDAOImpl implements RestDAO {
 
     @Override
     @Transactional
-    public void addCurrencyRate(OpenExchangeRates rates, LocalDate date) {
+    public void addCurrencyRate(OpenExchangeRatesDTO rates, LocalDate date) {
         CurrencyRate rate = new CurrencyRate();
 
-        rate.setDateTime(date.atStartOfDay());
+        rate.setDate(date);
         rate.setRateKZ(rates.getRates().get("KZT"));
         rate.setRateRU(rates.getRates().get("RUB"));
 

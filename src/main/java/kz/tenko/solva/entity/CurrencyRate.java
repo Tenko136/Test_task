@@ -3,6 +3,7 @@ package kz.tenko.solva.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,8 +15,8 @@ public class CurrencyRate {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "date_time")
-    private LocalDateTime dateTime;
+    @Column(name = "date_rate")
+    private LocalDate dateRate;
 
     @Column(name = "rate_USD_KZ")
     private double rateKZ;
@@ -26,8 +27,8 @@ public class CurrencyRate {
     public CurrencyRate() {
     }
 
-    public CurrencyRate(LocalDateTime dateTime, double rateUSDxKZ, double rateUSDxRU) {
-        this.dateTime = dateTime;
+    public CurrencyRate(LocalDate dateRate, double rateUSDxKZ, double rateUSDxRU) {
+        this.dateRate = dateRate;
         this.rateKZ = rateUSDxKZ;
         this.rateRU = rateUSDxRU;
     }
@@ -40,12 +41,12 @@ public class CurrencyRate {
         this.id = id;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return dateRate;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate dateRate) {
+        this.dateRate = dateRate;
     }
 
     public double getRateKZ() {

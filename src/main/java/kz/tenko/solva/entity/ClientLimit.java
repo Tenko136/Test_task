@@ -12,7 +12,7 @@ public class ClientLimit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "client_account_id")
@@ -22,7 +22,7 @@ public class ClientLimit {
     private LocalDateTime dateTime;
 
     @Column(name = "amount")
-    private double amount;
+    private double amount = 1000.00;
 
     @Column(name = "category")
     private String category;
@@ -31,7 +31,7 @@ public class ClientLimit {
     private double rest;
 
     @Column(name = "currency")
-    private String currency;
+    private String currency = "USD";
 
     public ClientLimit() {
     }
@@ -45,11 +45,11 @@ public class ClientLimit {
         this.currency = currency;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

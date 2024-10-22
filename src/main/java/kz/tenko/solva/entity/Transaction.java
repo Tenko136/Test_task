@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "client_transaction")
-public class Transactions {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +36,10 @@ public class Transactions {
     private boolean IsLimitExceed;
 
 
-    public Transactions() {
+    public Transaction() {
     }
 
-    public Transactions(int clientAccountId, int targetAccNum, double purchaseAmount, String category, LocalDateTime dateTime, String currency, boolean isLimitExceed) {
+    public Transaction(int clientAccountId, int targetAccNum, double purchaseAmount, String category, LocalDateTime dateTime, String currency, boolean isLimitExceed) {
         this.clientAccountId = clientAccountId;
         this.targetAccNum = targetAccNum;
         this.purchaseAmount = purchaseAmount;

@@ -1,18 +1,18 @@
-package kz.tenko.solva.entity;
+package kz.tenko.solva.dto;
 
 
 import java.util.HashMap;
 
 
-public class OpenExchangeRates {
+public class OpenExchangeRatesDTO {
 
     private String base;
     private HashMap<String, Double> rates;
 
-    public OpenExchangeRates() {
+    public OpenExchangeRatesDTO() {
     }
 
-    public OpenExchangeRates(String base, HashMap<String, Double> rates) {
+    public OpenExchangeRatesDTO(String base, HashMap<String, Double> rates) {
         this.base = base;
         this.rates = rates;
     }

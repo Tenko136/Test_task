@@ -1,4 +1,4 @@
-package kz.tenko.solva.entity.dto;
+package kz.tenko.solva.dto;
 
 import kz.tenko.solva.entity.ClientAccount;
 
