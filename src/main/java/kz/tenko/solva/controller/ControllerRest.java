@@ -1,5 +1,7 @@
 package kz.tenko.solva.controller;
 
+import kz.tenko.solva.dao.RestDAO;
+import kz.tenko.solva.dto.TransactionDTO;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.Transaction;
 import kz.tenko.solva.dto.ClientLimitDTO;
@@ -17,10 +19,13 @@ public class ControllerRest {
     @Autowired
     private RestService restService;
 
+    @Autowired
+    private RestDAO dao;
+
     @PostMapping("/save-operation")
-    public Transaction saveTransaction(@RequestBody Transaction transaction) {
+    public Transaction saveTransaction(@RequestBody TransactionDTO transaction) {
         restService.saveOperation(transaction);
-        return transaction;
+        return new Transaction();
     }
 
     @PostMapping("/new-limit")
@@ -34,10 +39,19 @@ public class ControllerRest {
     }
 
 
-//    @GetMapping("/exchange-rate")
-//    public void addExchangeRate() {
-//        restService.addCurrencyRate();
-//    }
+    @GetMapping("/exchange-rate")
+    public void addExchangeRate() {
+        restService.addCurrencyRate();
+    }
+
+    @GetMapping("/rest/{accountNum}")
+    public ClientLimit getRestOfLimit(@PathVariable String accountNum) {
+
+        return dao.getLastLimit(accountNum);
+    }
+
+
+
 }
 
 

@@ -1,22 +1,21 @@
 package kz.tenko.solva.dto;
 
 public class TransactionDTO {
-    private int clientAccountId;
+    private String clientAccountNum;
     private int targetAccNum;
     private double purchaseAmount;
 
     private String category;
     private String currency;
-
     public TransactionDTO() {
     }
 
-    public int getClientAccountId() {
-        return clientAccountId;
+    public String getClientAccountNum() {
+        return clientAccountNum;
     }
 
-    public void setClientAccountId(int clientAccountId) {
-        this.clientAccountId = clientAccountId;
+    public void setClientAccountNum(String clientAccountNum) {
+        this.clientAccountNum = clientAccountNum;
     }
 
     public int getTargetAccNum() {

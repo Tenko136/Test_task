@@ -12,10 +12,10 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "client_account_id")
-    private int clientAccountId;
+    private Long clientAccountId;
 
     @Column(name = "target_acc_num")
     private int targetAccNum;
@@ -33,35 +33,35 @@ public class Transaction {
     private String currency;
 
     @Column(name = "is_limit_exceed")
-    private boolean IsLimitExceed;
+    private boolean isLimitExceed;
 
 
     public Transaction() {
     }
 
-    public Transaction(int clientAccountId, int targetAccNum, double purchaseAmount, String category, LocalDateTime dateTime, String currency, boolean isLimitExceed) {
+    public Transaction(Long clientAccountId, int targetAccNum, double purchaseAmount, String category, LocalDateTime dateTime, String currency, boolean isLimitExceed) {
         this.clientAccountId = clientAccountId;
         this.targetAccNum = targetAccNum;
         this.purchaseAmount = purchaseAmount;
         this.category = category;
         this.dateTime = dateTime;
         this.currency = currency;
-        IsLimitExceed = isLimitExceed;
+        this.isLimitExceed = isLimitExceed;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getClientAccountId() {
+    public Long getClientAccountId() {
         return clientAccountId;
     }
 
-    public void setClientAccountId(int clientAccountId) {
+    public void setClientAccountId(Long clientAccountId) {
         this.clientAccountId = clientAccountId;
     }
 
@@ -106,10 +106,10 @@ public class Transaction {
     }
 
     public boolean isLimitExceed() {
-        return IsLimitExceed;
+        return isLimitExceed;
     }
 
     public void setLimitExceed(boolean limitExceed) {
-        IsLimitExceed = limitExceed;
+        isLimitExceed = limitExceed;
     }
 }

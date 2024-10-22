@@ -27,10 +27,10 @@ public class CurrencyRate {
     public CurrencyRate() {
     }
 
-    public CurrencyRate(LocalDate dateRate, double rateUSDxKZ, double rateUSDxRU) {
+    public CurrencyRate(LocalDate dateRate, double rateKZ, double rateRU) {
         this.dateRate = dateRate;
-        this.rateKZ = rateUSDxKZ;
-        this.rateRU = rateUSDxRU;
+        this.rateKZ = rateKZ;
+        this.rateRU = rateRU;
     }
 
     public int getId() {

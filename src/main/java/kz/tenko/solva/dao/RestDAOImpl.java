@@ -31,6 +31,7 @@ public class RestDAOImpl implements RestDAO {
         transaction.setDateTime(LocalDateTime.now());
         entityManager.merge(transaction);
     }
+
     @Override
     @Transactional
     public void newLimit(ClientLimitDTO limit) {
@@ -46,8 +47,16 @@ public class RestDAOImpl implements RestDAO {
 
     @Override
     @Transactional
+    public void updateLimit(ClientLimit limit) {
+
+        entityManager.merge(limit);
+    }
+
+    @Override
+    @Transactional
     public List<ClientLimit> getLimits(String accountNum) {
-        Query query = entityManager.createQuery("from ClientLimit where clientAccount.num =:clientAccountNum");
+        Query query = entityManager
+                .createQuery("from ClientLimit where clientAccount.num =:clientAccountNum order by dateTime desc");
         query.setParameter("clientAccountNum", accountNum);
         return query.getResultList();
     }
@@ -63,6 +72,35 @@ public class RestDAOImpl implements RestDAO {
 
         entityManager.merge(rate);
     }
+
+    @Override
+    @Transactional
+    public CurrencyRate getCurrencyRate() {
+        return (CurrencyRate) entityManager
+                .createQuery("from CurrencyRate order by dateRate desc limit 1 ")
+                .getSingleResult();
+    }
+
+    @Override
+    @Transactional
+    public ClientLimit getLastLimit(String accountNum) {
+
+        Query query = entityManager
+                .createQuery("from ClientLimit where clientAccount.num =:clientAccountNum order by dateTime desc limit 1 ");
+        query.setParameter("clientAccountNum", accountNum);
+        ClientLimit limit = (ClientLimit) query.getSingleResult();
+        return limit;
+    }
+
+    @Override
+    @Transactional
+    public ClientAccount getAccountByNum(String num) {
+        Query query = entityManager
+                .createQuery("from ClientAccount where num =:clientAccountNum");
+        query.setParameter("clientAccountNum", num);
+        return (ClientAccount) query.getSingleResult();
+    }
+
 
 }
 
