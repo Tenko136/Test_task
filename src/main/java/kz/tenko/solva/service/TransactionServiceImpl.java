@@ -1,11 +1,9 @@
 package kz.tenko.solva.service;
 
 
-import kz.tenko.solva.dao.RestDAO;
-import kz.tenko.solva.dto.ClientLimitDTO;
-import kz.tenko.solva.dto.LimitsSearchDTO;
+import kz.tenko.solva.dao.TransactionDAO;
 import kz.tenko.solva.dto.OpenExchangeRatesDTO;
-import kz.tenko.solva.dto.TransactionDTO;
+import kz.tenko.solva.dto.TransactionCreateDTO;
 import kz.tenko.solva.entity.ClientAccount;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.CurrencyRate;
@@ -15,18 +13,16 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 
 @Service
-public class RestServiceImpl implements RestService {
+public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
-    private RestDAO restDAO;
+    private TransactionDAO transactionDAO;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -35,24 +31,11 @@ public class RestServiceImpl implements RestService {
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
 
     @Override
-    public void saveOperation(TransactionDTO transaction) {
-        ClientAccount clientAccount = restDAO.getAccountByNum(transaction.getClientAccountNum());
+    public void saveOperation(TransactionCreateDTO transaction) {
+        ClientAccount clientAccount = transactionDAO.getAccountByNum(transaction.getClientAccountNum());
         if (clientAccount == null)
             return;
-        transactionVerificationRU(transaction, clientAccount);
-    }
-
-    @Override
-//    @Scheduled(cron = "@monthly")
-    public void newLimit(ClientLimitDTO limit) {
-
-        restDAO.newLimit(limit);
-    }
-
-    @Override
-    public List<ClientLimit> getLimits(LimitsSearchDTO dto) {
-
-        return restDAO.getLimits(dto.getAccountNum());
+        transactionVerification(transaction, clientAccount);
     }
 
     @Override
@@ -64,23 +47,23 @@ public class RestServiceImpl implements RestService {
                 String.format(currencyURL, date.format(formatter)),
                 OpenExchangeRatesDTO.class
         );
-        restDAO.addCurrencyRate(rates, date);
+        transactionDAO.addCurrencyRate(rates, date);
 
     }
 
-    public void transactionVerificationRU(TransactionDTO dto, ClientAccount clientAccount) {
+    public void transactionVerification(TransactionCreateDTO dto, ClientAccount clientAccount) {
 
         double sum = dto.getPurchaseAmount();
         String currency = dto.getCurrency();
 
-        CurrencyRate rate = restDAO.getCurrencyRate();
+        CurrencyRate rate = transactionDAO.getCurrencyRate();
         double sumInUsd;
         if (currency.equals("RUB")) {
             sumInUsd = sum / rate.getRateRU();
         } else {
             sumInUsd = sum / rate.getRateKZ();
         }
-        ClientLimit clientLimit = restDAO.getLastLimit(dto.getClientAccountNum());
+        ClientLimit clientLimit = transactionDAO.getLastLimit(dto.getClientAccountNum());
         double rest = clientLimit.getRest();
 
         boolean flag;
@@ -100,7 +83,7 @@ public class RestServiceImpl implements RestService {
         transaction.setCurrency(currency);
         transaction.setPurchaseAmount(sum);
         transaction.setTargetAccNum(dto.getTargetAccNum());
-        transaction.setClientAccountId(clientAccount.getId());
+        transaction.setClientAccount(clientAccount);
 
 
         saveLimitAndOperation(clientLimit, transaction);
@@ -108,8 +91,8 @@ public class RestServiceImpl implements RestService {
 
     @Transactional
     public void saveLimitAndOperation(ClientLimit clientLimit, Transaction transaction) {
-        restDAO.updateLimit(clientLimit);
-        restDAO.saveOperation(transaction);
+        transactionDAO.updateLimit(clientLimit);
+        transactionDAO.saveOperation(transaction);
     }
 
 }

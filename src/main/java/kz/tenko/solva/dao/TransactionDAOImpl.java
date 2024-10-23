@@ -2,23 +2,21 @@ package kz.tenko.solva.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import kz.tenko.solva.dto.ClientLimitDTO;
 import kz.tenko.solva.entity.ClientAccount;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.CurrencyRate;
 import kz.tenko.solva.entity.Transaction;
-import kz.tenko.solva.dto.ClientLimitDTO;
 import kz.tenko.solva.dto.OpenExchangeRatesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Repository
-public class RestDAOImpl implements RestDAO {
+public class TransactionDAOImpl implements TransactionDAO {
 
     @Autowired
     private EntityManager entityManager;
@@ -34,31 +32,14 @@ public class RestDAOImpl implements RestDAO {
 
     @Override
     @Transactional
-    public void newLimit(ClientLimitDTO limit) {
-        ClientAccount clientAccount = new ClientAccount();
-        clientAccount.setId(limit.getClientId());
-
-        ClientLimit clientLimit = new ClientLimit();
-        clientLimit.setClientAccount(clientAccount);
-        clientLimit.setCategory(limit.getCategory());
-        clientLimit.setDateTime(LocalDateTime.now());
-        entityManager.merge(clientLimit);
-    }
-
-    @Override
-    @Transactional
     public void updateLimit(ClientLimit limit) {
-
         entityManager.merge(limit);
     }
 
     @Override
     @Transactional
-    public List<ClientLimit> getLimits(String accountNum) {
-        Query query = entityManager
-                .createQuery("from ClientLimit where clientAccount.num =:clientAccountNum order by dateTime desc");
-        query.setParameter("clientAccountNum", accountNum);
-        return query.getResultList();
+    public void newLimit(ClientLimitDTO limit) {
+
     }
 
     @Override
@@ -72,7 +53,6 @@ public class RestDAOImpl implements RestDAO {
 
         entityManager.merge(rate);
     }
-
     @Override
     @Transactional
     public CurrencyRate getCurrencyRate() {
@@ -100,8 +80,6 @@ public class RestDAOImpl implements RestDAO {
         query.setParameter("clientAccountNum", num);
         return (ClientAccount) query.getSingleResult();
     }
-
-
 }
 
 

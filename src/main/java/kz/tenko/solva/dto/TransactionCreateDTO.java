@@ -1,13 +1,13 @@
 package kz.tenko.solva.dto;
 
-public class TransactionDTO {
+public class TransactionCreateDTO {
     private String clientAccountNum;
     private int targetAccNum;
     private double purchaseAmount;
 
     private String category;
     private String currency;
-    public TransactionDTO() {
+    public TransactionCreateDTO() {
     }
 
     public String getClientAccountNum() {

@@ -14,8 +14,9 @@ public class Transaction {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "client_account_id")
-    private Long clientAccountId;
+    @ManyToOne
+    @JoinColumn(name = "client_account_id")
+    private ClientAccount clientAccount;
 
     @Column(name = "target_acc_num")
     private int targetAccNum;
@@ -35,12 +36,11 @@ public class Transaction {
     @Column(name = "is_limit_exceed")
     private boolean isLimitExceed;
 
-
     public Transaction() {
     }
 
-    public Transaction(Long clientAccountId, int targetAccNum, double purchaseAmount, String category, LocalDateTime dateTime, String currency, boolean isLimitExceed) {
-        this.clientAccountId = clientAccountId;
+    public Transaction(ClientAccount clientAccount, int targetAccNum, double purchaseAmount, String category, LocalDateTime dateTime, String currency, boolean isLimitExceed) {
+        this.clientAccount = clientAccount;
         this.targetAccNum = targetAccNum;
         this.purchaseAmount = purchaseAmount;
         this.category = category;
@@ -57,12 +57,12 @@ public class Transaction {
         this.id = id;
     }
 
-    public Long getClientAccountId() {
-        return clientAccountId;
+    public ClientAccount getClientAccount() {
+        return clientAccount;
     }
 
-    public void setClientAccountId(Long clientAccountId) {
-        this.clientAccountId = clientAccountId;
+    public void setClientAccount(ClientAccount clientAccount) {
+        this.clientAccount = clientAccount;
     }
 
     public int getTargetAccNum() {
