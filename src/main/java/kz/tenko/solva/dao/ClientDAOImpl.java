@@ -10,6 +10,7 @@ import kz.tenko.solva.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class ClientDAOImpl implements ClientDAO {
         Query query = entityManager
                 .createQuery("from Transaction where clientAccount.num =:clientAccountNum " +
                         "and isLimitExceed =:isLimitExceed order by dateTime desc");
-    query.setParameter("clientAccountNum", dto.getClientAccountNum());
-    query.setParameter("isLimitExceed", dto.isExceededLimit());
+        query.setParameter("clientAccountNum", dto.getClientAccountNum());
+        query.setParameter("isLimitExceed", dto.isExceededLimit());
 
-    return query.getResultList();
+        return query.getResultList();
     }
 
     @Override
@@ -39,12 +40,10 @@ public class ClientDAOImpl implements ClientDAO {
         clientAccount.setId(limit.getClientId());
 
         ClientLimit clientLimit = new ClientLimit();
-
         clientLimit.setClientAccount(clientAccount);
         clientLimit.setCategory(limit.getCategory());
         clientLimit.setRest(1000.0);
         clientLimit.setDateTime(LocalDateTime.now());
-
         entityManager.merge(clientLimit);
     }
 
@@ -57,4 +56,13 @@ public class ClientDAOImpl implements ClientDAO {
 
         return query.getResultList();
     }
+
+    @Override
+    public List<ClientAccount> allClientAccounts() {
+        Query query = entityManager.createQuery("from ClientAccount");
+        return query.getResultList();
+
+
+    }
 }
+

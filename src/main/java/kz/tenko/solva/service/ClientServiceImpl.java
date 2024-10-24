@@ -3,15 +3,18 @@ package kz.tenko.solva.service;
 import kz.tenko.solva.dao.ClientDAO;
 import kz.tenko.solva.dto.ClientLimitDTO;
 import kz.tenko.solva.dto.LimitsSearchDTO;
+import kz.tenko.solva.dto.TransactionsResponseDTO;
 import kz.tenko.solva.dto.TransactionSearchDTO;
+import kz.tenko.solva.entity.ClientAccount;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -20,8 +23,21 @@ public class ClientServiceImpl implements ClientService {
     ClientDAO clientDAO;
 
     @Override
-    public List<Transaction> getTransactions(TransactionSearchDTO dto) {
-        return clientDAO.getTransactions(dto);
+    public List<TransactionsResponseDTO> getTransactions(TransactionSearchDTO dto) {
+        List<TransactionsResponseDTO> newExceededTransactions = new ArrayList<>();
+        TransactionsResponseDTO response;
+        for (Transaction t : clientDAO.getTransactions(dto)) {
+            response = new TransactionsResponseDTO();
+
+            response.setPurchaseAmount(t.getPurchaseAmount());
+            response.setCurrency(t.getCurrency());
+            response.setCategory(t.getCategory());
+            response.setDateTime(t.getDateTime());
+
+            newExceededTransactions.add(response);
+        }
+        return newExceededTransactions;
+
     }
 
     @Override
@@ -34,9 +50,21 @@ public class ClientServiceImpl implements ClientService {
         return clientDAO.getLimits(dto.getAccountNum());
     }
 
-    //todo
     @Scheduled(cron = "@monthly")
     public void updateAllLimitsEveryMonth() {
 
+        ClientLimitDTO dto;
+        for (ClientAccount account : clientDAO.allClientAccounts()) {
+            dto = new ClientLimitDTO();
+            dto.setClientId(account.getId());
+            dto.setCategory("service");
+            clientDAO.newLimit(dto);
+
+            dto = new ClientLimitDTO();
+            dto.setClientId(account.getId());
+            dto.setCategory("product");
+            clientDAO.newLimit(dto);
+        }
     }
+
 }
