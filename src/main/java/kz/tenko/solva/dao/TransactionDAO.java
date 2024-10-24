@@ -22,7 +22,7 @@ public interface TransactionDAO {
 
      CurrencyRate getCurrencyRate();
 
-     ClientLimit getLastLimit(String accountNum);
+     ClientLimit getLastLimit(String accountNum, String category);
 
      ClientAccount getAccountByNum(String num);
 

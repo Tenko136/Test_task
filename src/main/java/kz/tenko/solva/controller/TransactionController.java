@@ -1,6 +1,7 @@
 package kz.tenko.solva.controller;
 
 import kz.tenko.solva.dao.TransactionDAO;
+import kz.tenko.solva.dto.ClientLimitDTO;
 import kz.tenko.solva.dto.TransactionCreateDTO;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.Transaction;
@@ -29,10 +30,10 @@ public class TransactionController {
         transactionService.addCurrencyRate();
     }
 
-    @GetMapping("/rest/{accountNum}")
-    public ClientLimit getRestOfLimit(@PathVariable String accountNum) {
+    @GetMapping("/rest")
+    public ClientLimit getRestOfLimit(@RequestBody ClientLimitDTO dto) {
 
-        return transactionDAO.getLastLimit(accountNum);
+        return transactionDAO.getLastLimit(dto.getAccountNum(), dto.getCategory());
     }
 
 

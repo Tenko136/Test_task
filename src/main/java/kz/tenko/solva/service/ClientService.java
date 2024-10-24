@@ -15,4 +15,5 @@ public interface ClientService {
     public void newLimit(ClientLimitDTO limit);
 
     public List<ClientLimit> getLimits(LimitsSearchDTO dto);
+
 }

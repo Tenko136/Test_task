@@ -32,9 +32,12 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void saveOperation(TransactionCreateDTO transaction) {
+
         ClientAccount clientAccount = transactionDAO.getAccountByNum(transaction.getClientAccountNum());
+
         if (clientAccount == null)
             return;
+
         transactionVerification(transaction, clientAccount);
     }
 
@@ -63,7 +66,8 @@ public class TransactionServiceImpl implements TransactionService {
         } else {
             sumInUsd = sum / rate.getRateKZ();
         }
-        ClientLimit clientLimit = transactionDAO.getLastLimit(dto.getClientAccountNum());
+
+        ClientLimit clientLimit = transactionDAO.getLastLimit(dto.getClientAccountNum(), dto.getCategory());
         double rest = clientLimit.getRest();
 
         boolean flag;
@@ -84,7 +88,6 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setPurchaseAmount(sum);
         transaction.setTargetAccNum(dto.getTargetAccNum());
         transaction.setClientAccount(clientAccount);
-
 
         saveLimitAndOperation(clientLimit, transaction);
     }

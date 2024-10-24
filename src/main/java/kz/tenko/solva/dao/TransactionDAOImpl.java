@@ -3,16 +3,17 @@ package kz.tenko.solva.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import kz.tenko.solva.dto.ClientLimitDTO;
+import kz.tenko.solva.dto.OpenExchangeRatesDTO;
 import kz.tenko.solva.entity.ClientAccount;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.CurrencyRate;
 import kz.tenko.solva.entity.Transaction;
-import kz.tenko.solva.dto.OpenExchangeRatesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Repository
@@ -25,7 +26,6 @@ public class TransactionDAOImpl implements TransactionDAO {
     @Override
     @Transactional
     public void saveOperation(Transaction transaction) {
-
         transaction.setDateTime(LocalDateTime.now());
         entityManager.merge(transaction);
     }
@@ -53,6 +53,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 
         entityManager.merge(rate);
     }
+
     @Override
     @Transactional
     public CurrencyRate getCurrencyRate() {
@@ -63,13 +64,19 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     @Override
     @Transactional
-    public ClientLimit getLastLimit(String accountNum) {
+    public ClientLimit getLastLimit(String accountNum, String category) {
 
         Query query = entityManager
-                .createQuery("from ClientLimit where clientAccount.num =:clientAccountNum order by dateTime desc limit 1 ");
+                .createQuery("from ClientLimit where clientAccount.num =:clientAccountNum " +
+                        "and category =: clientLimitCategory order by dateTime desc limit 1 ");
         query.setParameter("clientAccountNum", accountNum);
-        ClientLimit limit = (ClientLimit) query.getSingleResult();
-        return limit;
+        query.setParameter("clientLimitCategory", category);
+        List<ClientLimit> limit = (List<ClientLimit>) query.getResultList();
+
+        if (limit.isEmpty())
+            return null;
+
+        return limit.get(0);
     }
 
     @Override

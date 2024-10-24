@@ -49,6 +49,7 @@ public class ClientDAOImpl implements ClientDAO {
     }
 
     @Override
+    @Transactional
     public List<ClientLimit> getLimits(String accountNum) {
         Query query = entityManager
                 .createQuery("from ClientLimit where clientAccount.num =:clientAccountNum order by dateTime desc");

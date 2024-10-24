@@ -3,6 +3,8 @@ package kz.tenko.solva.dto;
 public class ClientLimitDTO {
     private Long clientId;
 
+    private String accountNum;
+
     private String category;
 
     public ClientLimitDTO() {
@@ -14,6 +16,14 @@ public class ClientLimitDTO {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 
     public String getCategory() {

@@ -19,9 +19,6 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     ClientDAO clientDAO;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
     @Override
     public List<Transaction> getTransactions(TransactionSearchDTO dto) {
         return clientDAO.getTransactions(dto);
