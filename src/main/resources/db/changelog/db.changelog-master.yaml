@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Anastasiya Darovskikh
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/create_database.sql
