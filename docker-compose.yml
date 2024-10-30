@@ -1,0 +1,26 @@
+version: "1.0"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/solva
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: solva
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: solva
+      MYSQL_DATABASE: solva
+    ports:
+      - "3307:3306"
+
+
