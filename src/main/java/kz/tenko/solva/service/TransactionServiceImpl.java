@@ -54,8 +54,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     }
 
-    public void transactionVerification(TransactionCreateDTO dto, ClientAccount clientAccount) {
-
+    private void transactionVerification(TransactionCreateDTO dto, ClientAccount clientAccount) {
         double sum = dto.getPurchaseAmount();
         String currency = dto.getCurrency();
 
@@ -89,13 +88,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setTargetAccNum(dto.getTargetAccNum());
         transaction.setClientAccount(clientAccount);
 
-        saveLimitAndOperation(clientLimit, transaction);
-    }
-
-    @Transactional
-    public void saveLimitAndOperation(ClientLimit clientLimit, Transaction transaction) {
-        transactionDAO.updateLimit(clientLimit);
-        transactionDAO.saveOperation(transaction);
+        transactionDAO.saveOperationAndLimit(transaction, clientLimit);
     }
 
 }

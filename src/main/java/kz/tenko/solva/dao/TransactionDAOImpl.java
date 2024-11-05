@@ -2,7 +2,6 @@ package kz.tenko.solva.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
-import kz.tenko.solva.dto.ClientLimitDTO;
 import kz.tenko.solva.dto.OpenExchangeRatesDTO;
 import kz.tenko.solva.entity.ClientAccount;
 import kz.tenko.solva.entity.ClientLimit;
@@ -11,6 +10,7 @@ import kz.tenko.solva.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,24 +22,12 @@ public class TransactionDAOImpl implements TransactionDAO {
     @Autowired
     private EntityManager entityManager;
 
-
     @Override
     @Transactional
-    public void saveOperation(Transaction transaction) {
+    public void saveOperationAndLimit(Transaction transaction, ClientLimit limit) {
         transaction.setDateTime(LocalDateTime.now());
         entityManager.merge(transaction);
-    }
-
-    @Override
-    @Transactional
-    public void updateLimit(ClientLimit limit) {
         entityManager.merge(limit);
-    }
-
-    @Override
-    @Transactional
-    public void newLimit(ClientLimitDTO limit) {
-
     }
 
     @Override
