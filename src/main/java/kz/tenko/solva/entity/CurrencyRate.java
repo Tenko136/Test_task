@@ -1,10 +1,7 @@
 package kz.tenko.solva.entity;
 
-
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "currency_rate")
@@ -64,6 +61,4 @@ public class CurrencyRate {
     public void setRateRU(double rateRU) {
         this.rateRU = rateRU;
     }
-
-
 }

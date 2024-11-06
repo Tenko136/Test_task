@@ -1,6 +1,5 @@
 package kz.tenko.solva.controller;
 
-
 import kz.tenko.solva.dao.ClientDAO;
 import kz.tenko.solva.dto.ClientLimitDTO;
 import kz.tenko.solva.dto.LimitsSearchDTO;
@@ -10,7 +9,6 @@ import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -35,7 +33,6 @@ public class ClientController {
 
     @GetMapping("/all-limits")
     public List<ClientLimit> getAllLimits(LimitsSearchDTO dto) {
-
         return clientService.getLimits(dto);
     }
 }

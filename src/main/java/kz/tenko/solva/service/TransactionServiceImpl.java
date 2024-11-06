@@ -1,6 +1,5 @@
 package kz.tenko.solva.service;
 
-
 import kz.tenko.solva.dao.TransactionDAO;
 import kz.tenko.solva.dto.OpenExchangeRatesDTO;
 import kz.tenko.solva.dto.TransactionCreateDTO;
@@ -11,12 +10,10 @@ import kz.tenko.solva.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -90,5 +87,4 @@ public class TransactionServiceImpl implements TransactionService {
 
         transactionDAO.saveOperationAndLimit(transaction, clientLimit);
     }
-
 }

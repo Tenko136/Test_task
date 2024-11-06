@@ -34,9 +34,6 @@ public class TransactionController {
     public ClientLimit getRestOfLimit(@RequestBody ClientLimitDTO dto) {
         return transactionDAO.getLastLimit(dto.getAccountNum(), dto.getCategory());
     }
-
-
-
 }
 
 

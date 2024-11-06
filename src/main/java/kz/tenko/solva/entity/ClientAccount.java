@@ -1,6 +1,5 @@
 package kz.tenko.solva.entity;
 
-
 import jakarta.persistence.*;
 
 @Entity

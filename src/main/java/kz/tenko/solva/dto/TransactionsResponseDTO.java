@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public class TransactionsResponseDTO {
 
-
     private double purchaseAmount;
 
     private String currency;

@@ -5,7 +5,6 @@ import kz.tenko.solva.dto.TransactionSearchDTO;
 import kz.tenko.solva.entity.ClientAccount;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.Transaction;
-
 import java.util.List;
 
 public interface ClientDAO {

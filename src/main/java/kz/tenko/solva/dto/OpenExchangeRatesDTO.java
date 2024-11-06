@@ -1,8 +1,6 @@
 package kz.tenko.solva.dto;
 
-
 import java.util.HashMap;
-
 
 public class OpenExchangeRatesDTO {
 
