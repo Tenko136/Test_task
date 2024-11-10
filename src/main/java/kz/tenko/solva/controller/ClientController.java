@@ -1,25 +1,24 @@
 package kz.tenko.solva.controller;
 
-import kz.tenko.solva.dao.ClientDAO;
 import kz.tenko.solva.dto.ClientLimitDTO;
 import kz.tenko.solva.dto.LimitsSearchDTO;
 import kz.tenko.solva.dto.TransactionSearchDTO;
 import kz.tenko.solva.dto.TransactionsResponseDTO;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.service.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/client")
 public class ClientController {
 
-    @Autowired
-    private ClientService clientService;
+    private final ClientService clientService;
 
-    @Autowired
-    private ClientDAO dao;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @GetMapping("/transactions")
     public List<TransactionsResponseDTO> getTransactionExceedingLimit(@RequestBody TransactionSearchDTO dto) {
