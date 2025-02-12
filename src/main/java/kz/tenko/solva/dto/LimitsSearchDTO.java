@@ -1,14 +1,12 @@
 package kz.tenko.solva.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class LimitsSearchDTO {
 
     private String accountNum;
 
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public void setAccountNum(String accountNum) {
-        this.accountNum = accountNum;
-    }
 }

@@ -1,10 +1,15 @@
 package kz.tenko.solva.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "client_limit")
+@Data
+@NoArgsConstructor
 public class ClientLimit {
 
     @Id
@@ -31,71 +36,12 @@ public class ClientLimit {
     @Column(name = "currency")
     private String currency = "USD";
 
-    public ClientLimit() {
-    }
-
     public ClientLimit(ClientAccount clientAccount, LocalDateTime dateTime, double amount, String category, double rest, String currency) {
         this.clientAccount = clientAccount;
         this.dateTime = dateTime;
         this.amount = amount;
         this.category = category;
         this.rest = rest;
-        this.currency = currency;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ClientAccount getClientAccount() {
-        return clientAccount;
-    }
-
-    public void setClientAccount(ClientAccount clientAccount) {
-        this.clientAccount = clientAccount;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public double getRest() {
-        return rest;
-    }
-
-    public void setRest(double rest) {
-        this.rest = rest;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
         this.currency = currency;
     }
 }

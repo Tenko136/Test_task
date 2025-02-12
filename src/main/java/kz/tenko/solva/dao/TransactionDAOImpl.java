@@ -33,7 +33,7 @@ public class TransactionDAOImpl implements TransactionDAO {
     public void addCurrencyRate(OpenExchangeRatesDTO rates, LocalDate date) {
         CurrencyRate rate = new CurrencyRate();
 
-        rate.setDate(date);
+        rate.setDateRate(date);
         rate.setRateKZ(rates.getRates().get("KZT"));
         rate.setRateRU(rates.getRates().get("RUB"));
 

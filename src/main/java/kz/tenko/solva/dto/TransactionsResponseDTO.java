@@ -1,7 +1,12 @@
 package kz.tenko.solva.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 public class TransactionsResponseDTO {
 
     private double purchaseAmount;
@@ -15,35 +20,4 @@ public class TransactionsResponseDTO {
     public TransactionsResponseDTO() {
     }
 
-    public double getPurchaseAmount() {
-        return purchaseAmount;
-    }
-
-    public void setPurchaseAmount(double purchaseAmount) {
-        this.purchaseAmount = purchaseAmount;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
 }

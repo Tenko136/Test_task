@@ -1,10 +1,15 @@
 package kz.tenko.solva.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "client_transaction")
+@Data
+@NoArgsConstructor
 public class Transaction {
 
     @Id
@@ -34,9 +39,6 @@ public class Transaction {
     @Column(name = "is_limit_exceed")
     private boolean isLimitExceed;
 
-    public Transaction() {
-    }
-
     public Transaction(ClientAccount clientAccount, int targetAccNum, double purchaseAmount, String category, LocalDateTime dateTime, String currency, boolean isLimitExceed) {
         this.clientAccount = clientAccount;
         this.targetAccNum = targetAccNum;
@@ -45,69 +47,5 @@ public class Transaction {
         this.dateTime = dateTime;
         this.currency = currency;
         this.isLimitExceed = isLimitExceed;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ClientAccount getClientAccount() {
-        return clientAccount;
-    }
-
-    public void setClientAccount(ClientAccount clientAccount) {
-        this.clientAccount = clientAccount;
-    }
-
-    public int getTargetAccNum() {
-        return targetAccNum;
-    }
-
-    public void setTargetAccNum(int targetAccNum) {
-        this.targetAccNum = targetAccNum;
-    }
-
-    public double getPurchaseAmount() {
-        return purchaseAmount;
-    }
-
-    public void setPurchaseAmount(double purchaseAmount) {
-        this.purchaseAmount = purchaseAmount;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public boolean isLimitExceed() {
-        return isLimitExceed;
-    }
-
-    public void setLimitExceed(boolean limitExceed) {
-        isLimitExceed = limitExceed;
     }
 }

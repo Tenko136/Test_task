@@ -1,10 +1,15 @@
 package kz.tenko.solva.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "currency_rate")
+@Data
+@NoArgsConstructor
 public class CurrencyRate {
 
     @Id
@@ -21,44 +26,9 @@ public class CurrencyRate {
     @Column(name = "rate_USD_RU")
     private double rateRU;
 
-    public CurrencyRate() {
-    }
-
     public CurrencyRate(LocalDate dateRate, double rateKZ, double rateRU) {
         this.dateRate = dateRate;
         this.rateKZ = rateKZ;
-        this.rateRU = rateRU;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return dateRate;
-    }
-
-    public void setDate(LocalDate dateRate) {
-        this.dateRate = dateRate;
-    }
-
-    public double getRateKZ() {
-        return rateKZ;
-    }
-
-    public void setRateKZ(double rateKZ) {
-        this.rateKZ = rateKZ;
-    }
-
-    public double getRateRU() {
-        return rateRU;
-    }
-
-    public void setRateRU(double rateRU) {
         this.rateRU = rateRU;
     }
 }
