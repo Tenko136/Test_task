@@ -74,7 +74,7 @@ public class ClientDAOJDBCImpl implements ClientDAO {
                 clientLimit.setClientAccount(new ClientAccount());
                 clientLimit.getClientAccount().setId(rs.getLong("client_account_id"));
                 clientLimit.getClientAccount().setNum(rs.getString("num"));
-                clientLimit.getClientAccount().setCurrency(rs.getString("currency"));
+                clientLimit.getClientAccount().setCurrency(rs.getString("account_currency"));
                 clientLimit.setDateTime(rs.getTimestamp("date_time").toLocalDateTime());
                 clientLimit.setAmount(rs.getDouble("amount"));
                 clientLimit.setCategory(rs.getString("category"));
