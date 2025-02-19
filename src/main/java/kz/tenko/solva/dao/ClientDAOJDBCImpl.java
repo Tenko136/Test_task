@@ -8,16 +8,27 @@ import kz.tenko.solva.entity.ClientAccount;
 import kz.tenko.solva.entity.ClientLimit;
 import kz.tenko.solva.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Profile("jdbc")
 @Repository
-public class ClientDAOImpl implements ClientDAO {
+public class ClientDAOJDBCImpl implements ClientDAO {
 
     @Autowired
     private EntityManager entityManager;
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
     @Override
@@ -49,11 +60,30 @@ public class ClientDAOImpl implements ClientDAO {
     @Override
     @Transactional
     public List<ClientLimit> getLimits(String accountNum) {
-        Query query = entityManager
-                .createQuery("from ClientLimit where clientAccount.num =:clientAccountNum order by dateTime desc");
-        query.setParameter("clientAccountNum", accountNum);
+        MapSqlParameterSource paramMap = new MapSqlParameterSource();
+        paramMap.addValue("num", accountNum);
+        return namedParameterJdbcTemplate.query("select l.*, a.num, a.currency as account_currency from client_limit l " +
+                "join client_account a " +
+                "on a.id = l.client_account_id " +
+                "where a.num = :num " +
+                "order by l.date_time desc", paramMap, new RowMapper<ClientLimit>() {
+            @Override
+            public ClientLimit mapRow(ResultSet rs, int rowNum) throws SQLException {
+                ClientLimit clientLimit = new ClientLimit();
+                clientLimit.setId(rs.getLong("id"));
+                clientLimit.setClientAccount(new ClientAccount());
+                clientLimit.getClientAccount().setId(rs.getLong("client_account_id"));
+                clientLimit.getClientAccount().setNum(rs.getString("num"));
+                clientLimit.getClientAccount().setCurrency(rs.getString("currency"));
+                clientLimit.setDateTime(rs.getTimestamp("date_time").toLocalDateTime());
+                clientLimit.setAmount(rs.getDouble("amount"));
+                clientLimit.setCategory(rs.getString("category"));
+                clientLimit.setRest(rs.getDouble("rest"));
+                clientLimit.setCurrency(rs.getString("currency"));
 
-        return query.getResultList();
+                return clientLimit;
+            }
+        });
     }
 
     @Override
