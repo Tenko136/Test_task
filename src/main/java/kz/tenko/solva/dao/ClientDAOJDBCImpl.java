@@ -34,6 +34,19 @@ public class ClientDAOJDBCImpl implements ClientDAO {
     @Override
     @Transactional
     public List<Transaction> getTransactions(TransactionSearchDTO dto) {
+//        MapSqlParameterSource paramMap = new MapSqlParameterSource();
+      //  paramMap.addValue("num", accountNum);
+//        return namedParameterJdbcTemplate.query("select * from transaction t " +
+//                "join client_account a " +
+//                "on a.id = t.client_account_id " +
+//                "where a.num = :num " +
+//                "order by l.date_time desc", paramMap, new RowMapper<ClientLimit>() {
+//                    @Override
+//                    public ClientLimit mapRow(ResultSet rs, int rowNum) throws SQLException {
+//
+//                    }
+//                }
+
         Query query = entityManager
                 .createQuery("from Transaction where clientAccount.num =:clientAccountNum " +
                         "and isLimitExceed =:isLimitExceed order by dateTime desc");
@@ -43,9 +56,11 @@ public class ClientDAOJDBCImpl implements ClientDAO {
         return query.getResultList();
     }
 
+
     @Override
     @Transactional
     public void newLimit(ClientLimitDTO limit) {
+
         ClientAccount clientAccount = new ClientAccount();
         clientAccount.setId(limit.getClientId());
 
@@ -56,7 +71,7 @@ public class ClientDAOJDBCImpl implements ClientDAO {
         clientLimit.setDateTime(LocalDateTime.now());
         entityManager.merge(clientLimit);
     }
-
+//todo
     @Override
     @Transactional
     public List<ClientLimit> getLimits(String accountNum) {
